@@ -51,6 +51,7 @@ public class Main extends Application {
         grid.setAlignment(Pos.CENTER);
 
         box2.getChildren().add(grid);
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
         //Input pra placa
         final TextField placa = new TextField();
