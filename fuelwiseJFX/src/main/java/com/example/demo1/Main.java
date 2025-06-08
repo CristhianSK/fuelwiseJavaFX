@@ -10,15 +10,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class Main extends Application {
     @Override
@@ -51,7 +48,6 @@ public class Main extends Application {
         grid.setAlignment(Pos.CENTER);
 
         box2.getChildren().add(grid);
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
         //Input pra placa
         final TextField placa = new TextField();
@@ -69,29 +65,30 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         GridPane.setConstraints(modelo, 0, 1);
         grid.getChildren().add(modelo);
 
+        //Input pros fabricante
+        final TextField fabricante = new TextField();
+        fabricante.setPromptText("Insira a fabricante do veículo");
+        fabricante.setPrefColumnCount(15);
+        fabricante.getText();
+        GridPane.setConstraints(fabricante, 0, 2);
+        grid.getChildren().add(fabricante);
+
+        //Input pros anoFabricacao
+        final TextField anoFabricacao = new TextField();
+        anoFabricacao.setPromptText("Insira o Ano de fabricação do veículo ");
+        anoFabricacao.setPrefColumnCount(15);
+        anoFabricacao.getText();
+        GridPane.setConstraints(anoFabricacao, 0, 3);
+        grid.getChildren().add(anoFabricacao);
+
         //Input pra observação
         final TextField observacao = new TextField();
         observacao.setPromptText("Insira uma observação sobre o veículo");
         observacao.setPrefColumnCount(15);
         observacao.getText();
-        GridPane.setConstraints(observacao, 0, 2);
+        GridPane.setConstraints(observacao, 0, 4);
         grid.getChildren().add(observacao);
 
-        //Input pros eixos
-        final TextField eixos = new TextField();
-        eixos.setPromptText("Insira os eixos do veículo");
-        eixos.setPrefColumnCount(15);
-        eixos.getText();
-        GridPane.setConstraints(eixos, 0, 3);
-        grid.getChildren().add(eixos);
-
-        //Input pros litragem
-        final TextField litragem = new TextField();
-        litragem.setPromptText("Insira a capacidade de litragem do veículo");
-        litragem.setPrefColumnCount(15);
-        litragem.getText();
-        GridPane.setConstraints(litragem, 0, 4);
-        grid.getChildren().add(litragem);
 
 
 
@@ -144,20 +141,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(!placa.getText().isEmpty() && !modelo.getText().isEmpty()
-                    && !eixos.getText().isEmpty() && !litragem.getText().isEmpty()){
-                        Veiculo veiculo = new Veiculo (placa.getText(), modelo.getText(), eixos.getText(), observacao.getText(), litragem.getText());
+                    && !anoFabricacao.getText().isEmpty() && !fabricante.getText().isEmpty()){
+                    anoFabricacao.getText();
+                        Veiculo veiculo = new Veiculo (placa.getText(), modelo.getText(), anoFabricacao.getText(), observacao.getText(), fabricante.getText());
                         lultimo.setText("Dados do ultimo veículo adicionado:");
                         lveiculo.setText("Placa do veiculo: "+veiculo.getPlaca());
                         lveiculo2.setText("Modelo do veiculo: "+veiculo.getModelo());
-                        lveiculo3.setText("Eixos do veiculo: "+veiculo.getEixos());
-                        lveiculo4.setText("Litragem do veiculo: "+veiculo.getLitragem());
+                        lveiculo3.setText("Fabricante do veiculo: "+veiculo.getFabricante());
+                        lveiculo4.setText("Ano de fabricação do veiculo: "+veiculo.getAnoFabricacao());
                         lveiculo5.setText("Observacao do veiculo: "+veiculo.getObservacao());
                         veiculos.add(veiculo);
                         placa.clear();
                         modelo.clear();
                         observacao.clear();
-                        litragem.clear();
-                        eixos.clear();
+                        fabricante.clear();
+                        anoFabricacao.clear();
                 }else{
                     lveiculo.setText("Todos os campos precisam ser preenchidos");
                 }
@@ -171,7 +169,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             public void handle(ActionEvent actionEvent) {
                 placa.clear();
                 modelo.clear();
-                eixos.clear();
+                anoFabricacao.clear();
                 observacao.clear();
             }
         });
@@ -234,8 +232,8 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
         TableColumn placaCol = new TableColumn("Placa");
         TableColumn modeloCol = new TableColumn("Modelo");
-        TableColumn eixosCol = new TableColumn("Eixos");
-        TableColumn litragemCol = new TableColumn("Litragem");
+        TableColumn fabricanteCol = new TableColumn("Fabricante");
+        TableColumn anoFabricacaoCol = new TableColumn("Ano de Fabricação");
         TableColumn observacaoCol = new TableColumn("Observação");
 
         placaCol.setCellValueFactory(
@@ -244,19 +242,105 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         modeloCol.setCellValueFactory(
                 new PropertyValueFactory<Veiculo, String>("modelo")
         );
-        eixosCol.setCellValueFactory(
-                new PropertyValueFactory<Veiculo, String>("eixos")
+        fabricanteCol.setCellValueFactory(
+                new PropertyValueFactory<Veiculo, String>("fabricante")
         );
-        litragemCol.setCellValueFactory(
-                new PropertyValueFactory<Veiculo, String>("litragem")
+        anoFabricacaoCol.setCellValueFactory(
+                new PropertyValueFactory<Veiculo, String>("anoFabricacao")
         );
         observacaoCol.setCellValueFactory(
                 new PropertyValueFactory<Veiculo, String>("observacao")
         );
 
 
+
         table.setItems(veiculos)    ;
-        table.getColumns().addAll(placaCol, modeloCol, eixosCol, litragemCol, observacaoCol);
+        table.getColumns().addAll(placaCol, modeloCol, fabricanteCol, anoFabricacaoCol, observacaoCol);
+
+
+        //Editar os dados da tabela
+
+        placaCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        placaCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
+                        if (t.getNewValue() != null && !t.getNewValue().trim().isEmpty()){
+                        ((Veiculo) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setPlaca(t.getNewValue());
+                        }else{
+                            table.refresh();
+                        }
+                    }
+                }
+        );
+
+        modeloCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        modeloCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
+                        if (t.getNewValue() != null && !t.getNewValue().trim().isEmpty()){
+                            ((Veiculo) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setModelo(t.getNewValue());
+                        }else{
+                            table.refresh();
+                        }
+                    }
+                }
+        );
+
+        anoFabricacaoCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        anoFabricacaoCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
+                        if (t.getNewValue() != null && !t.getNewValue().equals(0)){
+                            ((Veiculo) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setAnoFabricacao(t.getNewValue());
+                        }else{
+                            table.refresh();
+                        }
+                    }
+                }
+        );
+
+        fabricanteCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        fabricanteCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
+                        if (t.getNewValue() != null && !t.getNewValue().trim().isEmpty()){
+                            ((Veiculo) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setFabricante(t.getNewValue());
+                        }else{
+                            table.refresh();
+                        }
+                    }
+                }
+        );
+
+        //Observacao nao checa se a edição é vazia, pois é um campo que pode estar vazio
+        observacaoCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        observacaoCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
+                            ((Veiculo) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setObservacao(t.getNewValue());
+                    }
+                }
+        );
+
+
+
+
+
 
         Label lbl5 = new Label("Veículos Registrados");
         lbl5.setAlignment(Pos.TOP_CENTER);

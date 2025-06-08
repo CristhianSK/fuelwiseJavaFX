@@ -1,29 +1,27 @@
 package com.example.demo1;
 
-import java.util.Locale;
-
 public class Veiculo {
     private String placa;
     private String modelo;
     private String observacao;
-    private String eixos;
-    private String litragem;
+    private String anoFabricacao;
+    private String fabricante;
 
 
-    public Veiculo(String placa, String modelo, String eixos, String observacao, String litragem){
+    public Veiculo(String placa, String modelo, String anoFabricacao, String observacao, String fabricante){
         this.placa = placa;
         this.modelo = modelo;
-        this.eixos = eixos;
+        this.anoFabricacao = anoFabricacao;
         this.observacao = observacao;
-        this.litragem = litragem;
+        this.fabricante = fabricante;
     }
 
-    public String getEixos() {
-        return eixos;
+    public String getAnoFabricacao() {
+        return anoFabricacao;
     }
 
-    public void setEixos(String eixos) {
-        this.eixos = eixos;
+    public void setAnoFabricacao(String anoFabricacao) {
+        this.anoFabricacao = anoFabricacao;
     }
 
     public String getObservacao() {
@@ -49,19 +47,19 @@ public class Veiculo {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    public String getLitragem() {
-        return litragem;
+    public String getFabricante() {
+        return fabricante;
     }
 
-    public void setLitragem(String litragem) {
-        this.litragem = litragem;
+    public void setFabricante(String litragem) {
+        this.fabricante = litragem;
     }
 
     public void mostrarDados(){
         System.out.println("Placa do veículo: "+placa);
         System.out.println("Modelo do veículo: "+modelo);
-        System.out.println("Eixos do veículo: "+eixos);
-        System.out.println("Capacidade de litragem do veículo: "+litragem);
+        System.out.println("Ano de Fabricação do veículo: "+ anoFabricacao);
+        System.out.println("Fabricante do veículo: "+fabricante);
         System.out.println("Observação do veículo: "+observacao);
         System.out.println("-=-=-=-=-=-=-=-=-=-=-");
 
