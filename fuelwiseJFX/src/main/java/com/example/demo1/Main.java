@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.*;
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -157,11 +159,15 @@ public class Main extends Application {
                         fabricante.clear();
                         anoFabricacao.clear();
                 }else{
-                    lveiculo.setText("Todos os campos precisam ser preenchidos");
-                }
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aviso");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Todos os campos obrigatórios precisam ser preenchidos.");
+                    alert.showAndWait();                }
             }
 
         });
+
 
 
         clear.setOnAction(new EventHandler<ActionEvent>() {
@@ -198,7 +204,7 @@ public class Main extends Application {
         box1.getChildren().add(btn1);
 
 
-        Button adicionarVeiculo = new Button("Adicionar novo veiculo");
+        Button adicionarVeiculo = new Button("Adicionar novo veículo");
         adicionarVeiculo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -206,6 +212,7 @@ public class Main extends Application {
             }
         });
 
+        Button removerVeiculo = new Button("Remover veículo selecionado");
 
         Scene scene = new Scene(box1,500,400);
         stage.setScene(scene);
@@ -229,6 +236,25 @@ public class Main extends Application {
 
          TableView table = new TableView();
          table.setEditable(true);
+
+
+
+        removerVeiculo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Veiculo selecionado = (Veiculo) table.getSelectionModel().getSelectedItem();
+                if (selecionado != null) {
+                    veiculos.remove(selecionado);
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aviso");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Por favor, selecione um veículo para remover.");
+                    alert.showAndWait();
+                }
+            }
+        });
+
 
         TableColumn placaCol = new TableColumn("Placa");
         TableColumn modeloCol = new TableColumn("Modelo");
@@ -297,7 +323,7 @@ public class Main extends Application {
                 new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
                     @Override
                     public void handle(TableColumn.CellEditEvent<Veiculo, String> t){
-                        if (t.getNewValue() != null && !t.getNewValue().equals(0)){
+                        if (t.getNewValue() != null && !t.getNewValue().trim().isEmpty()){
                             ((Veiculo) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setAnoFabricacao(t.getNewValue());
@@ -307,7 +333,6 @@ public class Main extends Application {
                     }
                 }
         );
-
         fabricanteCol.setCellFactory(TextFieldTableCell.forTableColumn());
         fabricanteCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Veiculo, String>>(){
@@ -349,8 +374,7 @@ public class Main extends Application {
         box3.getChildren().addAll(lbl5, table);
         box3.getChildren().add(voltarHome2);
         box3.getChildren().add(adicionarVeiculo);
-
-
+        box3.getChildren().add(removerVeiculo);
     }
 
     public static void main(String [] args){
